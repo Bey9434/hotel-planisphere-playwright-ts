@@ -1,8 +1,15 @@
+# Documentation (Internal use only - interview prep)
+docs/
+
+# AI Development Tools (Internal use only)
+.agent/rules/glossary.md
+.agent/skills/glossary/SKILL.md
+.agent/workflows/add-glossary.md
 
 # Playwright
-node_modules/
-/test-results/
-/playwright-report/
 /blob-report/
-/playwright/.cache/
+/playwright-report/
 /playwright/.auth/
+/playwright/.cache/
+/test-results/
+node_modules/

@@ -1,18 +1,18 @@
 import { test, expect } from "@playwright/test";
+import { goToLoginPage, emailInput, passwordInput, loginButton, loginPageTitle, emailErrorMessage, passwordErrorMessage } from '../pages/login.pages';
 
 test("login", async ({ page }) => {
-    await page.goto("login");
+    await goToLoginPage(page);
     // ログインタイトルが表示されているか
-    await expect(page.getByRole("heading", { name: "ログイン" })).toBeVisible();
-    // ログインボタンをクリックする
-    await page.locator("#login-form").getByRole("button", { name: "ログイン", exact: true }).click();
+    await expect(loginPageTitle(page)).toBeVisible();
     // メールアドレスの入力欄が表示されているか
-    await expect(page.getByRole("textbox", { name: "メールアドレス", exact: true })).toBeVisible();
+    await expect(emailInput(page)).toBeVisible();
+    await loginButton(page).click();
     // メールアドレスのエラーメッセージが表示されているか
-    await expect(page.locator('#email-message')).toHaveText('このフィールドを入力してください。');
+    await expect(emailErrorMessage(page)).toHaveText('このフィールドを入力してください。');
     // パスワードの入力欄が表示されているか
-    await expect(page.getByRole("textbox", { name: "パスワード", exact: true })).toBeVisible();
+    await expect(passwordInput(page)).toBeVisible();
     // パスワードのエラーメッセージが表示されているか
-    await expect(page.locator('#password-message')).toHaveText('このフィールドを入力してください。');
+    await expect(passwordErrorMessage(page)).toHaveText('このフィールドを入力してください。');
 });
 

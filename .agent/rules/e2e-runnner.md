@@ -1,5 +1,5 @@
 ---
-trigger: model_decision
+trigger: always_on
 description: PlaywrightのE2Eテスト実装・保守。POM設計、ロケーター選定、テスト戦略の専門家。
 ---
 

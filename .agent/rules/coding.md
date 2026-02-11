@@ -1,5 +1,5 @@
 ---
-trigger: model_decision
+trigger: always_on
 description: 汎用的なTypeScript/JavaScript コーディング規約。FP原則、型安全性、コード品質基準。
 ---
 

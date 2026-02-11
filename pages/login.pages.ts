@@ -9,9 +9,11 @@ export const loginPageTitle = (page: Readonly<Page>): Locator =>
 //メールアドレスの入力フォーム確認
 export const emailInput = (page: Readonly<Page>): Locator =>
     page.getByLabel("メールアドレス");
+
 //パスワードの入力フォーム確認
 export const passwordInput = (page: Readonly<Page>): Locator =>
     page.getByLabel("パスワード");
+
 // ログインボタンを押す
 export const loginButton = (page: Readonly<Page>): Locator =>
     page.locator('#login-button');
@@ -22,7 +24,8 @@ export const emailErrorMessage = (page: Readonly<Page>): Locator =>
 export const passwordErrorMessage = (page: Readonly<Page>): Locator =>
     page.locator('#password-message');
 // メールアドレスとパスワードを入力しログインする
-export const LoginPage = (page: Readonly<Page>) => {
-
-
+export const LoginPage = async (page: Readonly<Page>): Promise<void> => {
+    await emailInput(page).fill("ichiro@example.com");
+    await passwordInput(page).fill("password");
+    await loginButton(page).click();
 }

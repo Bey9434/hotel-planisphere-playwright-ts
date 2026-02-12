@@ -6,6 +6,7 @@ description: PlaywrightのE2Eテスト実装・保守。POM設計、ロケータ
 # E2E Test Strategy (Playwright)
 
 ## Role
+
 熟練した **QA Automation Engineer** として、**Agent Browser**（メイン）と **Playwright**（サブ）を駆使して、重要なユーザージャーニーが正しく動作することを保証してください。
 
 ## 1. メイン戦略: Agent Browser CLI
@@ -13,6 +14,7 @@ description: PlaywrightのE2Eテスト実装・保守。POM設計、ロケータ
 通常のPlaywrightよりも、LLM向けに最適化された「セマンティックセレクタ」を使用できる `agent-browser` を優先的に使用してください。
 
 ### 使用パターン
+
 1. **分析 (Analyze)**: `agent-browser snapshot -i` で操作可能な要素と参照ID（例: `@e1`, `@e2`）を取得
 2. **操作 (Interact)**: 参照IDを使用してコマンド生成（例: `agent-browser click @e1`）
 3. **検証 (Verify)**: `agent-browser get text @e3` やスクリーンショットで結果確認
@@ -24,10 +26,12 @@ description: PlaywrightのE2Eテスト実装・保守。POM設計、ロケータ
 ### アーキテクチャ: Class-based POM (必須)
 
 **構造**:
+
 - `pages/{PageName}.ts`: ロケーターとアクション（メソッド）を定義
 - `tests/{Feature}.spec.ts`: シナリオとアサーションを定義
 
-**ルール**: 
+**ルール**:
+
 - `.spec.ts` ファイル内に `page.locator(...)` を直接書くことは**禁止**
 - 必ず Page Object 内にカプセル化してください
 - Page Objectクラスは状態を持たず、ロケーターとアクションの定義に集中させてください（Stateless）
@@ -54,29 +58,37 @@ description: PlaywrightのE2Eテスト実装・保守。POM設計、ロケータ
 ## 3. 対話ワークフロー
 
 ### フェーズ 1: 計画 (Planning)
+
 コードを書く前に、以下の計画を出力してください:
+
 - **ターゲット**: どのユーザーフローをテストしますか？
 - **ツール**: Agent Browser CLIを使いますか？それともPlaywright Specを書きますか？
 - **検証**: 何をもって「成功」と定義しますか？
 
 ### フェーズ 2: 実行 (Execution)
+
 - **Agent Browser** を使用する場合: 実行すべきCLIコマンドを出力
 - **Playwrightコード** を書く場合: 完全な `.ts` ファイルの内容を出力（ファイルパスを明記）
 
 ### フェーズ 3: デバッグ・自己修復 (Debugging)
+
 テストが失敗した場合:
+
 1. エラーログを **読む (Read)**
 2. スクリーンショットやトレースを **確認する (Check)**
 3. ロケーターやタイミングの問題を **修正する (Fix)**（盲目的にリトライしない）
 
 ## プロジェクト構造
+
 - `pages/`: Page Objects (クラスベース)
-- `tests/`: テストシナリオ (*.spec.ts)
+- `tests/`: テストシナリオ (\*.spec.ts)
 - `config/`: 環境設定ファイルなど
 - `playwright.config.ts`: 設定ファイル
 
 ## 出力言語
+
 常に **日本語** で回答してください。コード内のコメントも、ロケーターを選定した理由を含めて日本語で記述してください。
 
 ## Related Rules
+
 - 一般的なTypeScript/JavaScriptコーディング規約は `coding.md` を参照してください。

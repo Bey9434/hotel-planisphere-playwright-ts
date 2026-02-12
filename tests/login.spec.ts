@@ -1,24 +1,29 @@
 import { test, expect } from "@playwright/test";
-import { goToLoginPage, emailInput, passwordInput, loginButton, loginPageTitle, emailErrorMessage, passwordErrorMessage, LoginPage } from '../pages/login.pages';
+import { navigateToLogin, getEmailInput, getPasswordInput, getSubmitButton, getHeading, getEmailErrorMessage, getPasswordErrorMessage, login } from '../pages/login.page';
 
-test("login", async ({ page }) => {
-    await goToLoginPage(page);
-    // ログインタイトルが表示されているか
-    await expect(loginPageTitle(page)).toBeVisible();
-    // メールアドレスの入力欄が表示されているか
-    await expect(emailInput(page)).toBeVisible();
-    // ログインボタンのクリック
-    await loginButton(page).click();
-    // メールアドレスのエラーメッセージが表示されているか
-    await expect(emailErrorMessage(page)).toHaveText('このフィールドを入力してください。');
-    // パスワードの入力欄が表示されているか
-    await expect(passwordInput(page)).toBeVisible();
-    // パスワードのエラーメッセージが表示されているか
-    await expect(passwordErrorMessage(page)).toHaveText('このフィールドを入力してください。');
+test.describe("ログイン機能", () => {
+    test("タイトルが表示されるか", async ({ page }) => {
+        await navigateToLogin(page);
+        await expect(getHeading(page)).toBeVisible()
+    });
 
-    //メールアドレスとパスワードを入力しログインする
-    await LoginPage(page);
-    //マイページに遷移したか
-    await expect(page).toHaveTitle(/マイページ/);
+    test("メールアドレスとパスワードの入力欄が表示されているか", async ({ page }) => {
+        await navigateToLogin(page);
+        await expect(getEmailInput(page)).toBeVisible()
+        await expect(getPasswordInput(page)).toBeVisible()
+    });
+
+    test("メールアドレスとパスワードが未入力の場合、エラーメッセージが表示されるか", async ({ page }) => {
+        await navigateToLogin(page);
+        await getSubmitButton(page).click();
+        await expect(getEmailErrorMessage(page)).toHaveText('このフィールドを入力してください。');
+        await expect(getPasswordInput(page)).toBeVisible();
+        await expect(getPasswordErrorMessage(page)).toHaveText('このフィールドを入力してください。')
+    });
+
+    test("メールアドレスとパスワードが正しく入力されている場合、マイページに遷移するか", async ({ page }) => {
+        await navigateToLogin(page);
+        await login(page);
+        await expect(page).toHaveTitle(/マイページ/);
+    });
 });
-

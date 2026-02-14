@@ -14,6 +14,9 @@
     "node": "22.21.1",
     "pnpm": "10.28.0"
   },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
   "devDependencies": {
     "@playwright/test": "^1.58.0",
     "@types/node": "^25.0.10",

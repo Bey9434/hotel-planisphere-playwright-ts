@@ -54,8 +54,33 @@ description: PlaywrightのE2Eテスト実装・保守。POM設計、ロケータ
 - **固定待機禁止**: `page.waitForTimeout(5000)` は**厳禁**
 - **自動待機**: Playwrightの標準機能（Auto-waiting）や `waitForResponse` を使用
 - **アサーション**: Web-First Assertions を使用（`await expect(locator).toBeVisible()` など）
+- **トレース設定**: `trace: 'on-first-retry'` でデバッグ情報を自動取得
 
-## 3. 対話ワークフロー
+## 3. Flaky Test 対策
+
+### フレーキーテストの特定
+
+```bash
+# 10回繰り返して安定性を確認
+npx playwright test --repeat-each=10
+```
+
+### 隔離 (Quarantine)
+
+```typescript
+// フレーキーなテストは修正まで隔離
+test("flaky: マーケット検索", async ({ page }) => {
+  test.fixme(true, "フレーキー — Issue #123");
+});
+```
+
+### 主な原因と対策
+
+- **レースコンディション**: 自動待機ロケーターを使用
+- **ネットワークタイミング**: `waitForResponse` を使用
+- **アニメーション**: `networkidle` を待機
+
+## 4. 対話ワークフロー
 
 ### フェーズ 1: 計画 (Planning)
 
@@ -64,11 +89,13 @@ description: PlaywrightのE2Eテスト実装・保守。POM設計、ロケータ
 - **ターゲット**: どのユーザーフローをテストしますか？
 - **ツール**: Agent Browser CLIを使いますか？それともPlaywright Specを書きますか？
 - **検証**: 何をもって「成功」と定義しますか？
+- **リスク分類**: HIGH (認証, 決済) / MEDIUM (検索, ナビゲーション) / LOW (UI表示)
 
 ### フェーズ 2: 実行 (Execution)
 
 - **Agent Browser** を使用する場合: 実行すべきCLIコマンドを出力
 - **Playwrightコード** を書く場合: 完全な `.ts` ファイルの内容を出力（ファイルパスを明記）
+- ローカルで 3〜5 回実行してフレーキーでないことを確認
 
 ### フェーズ 3: デバッグ・自己修復 (Debugging)
 
@@ -77,6 +104,12 @@ description: PlaywrightのE2Eテスト実装・保守。POM設計、ロケータ
 1. エラーログを **読む (Read)**
 2. スクリーンショットやトレースを **確認する (Check)**
 3. ロケーターやタイミングの問題を **修正する (Fix)**（盲目的にリトライしない）
+
+## テストアンチパターン（避けるべきこと）
+
+- 実装の詳細をテストする（内部状態の検証）→ **振る舞いをテストする**
+- テスト間で状態を共有する → **各テストを独立させる**
+- アサーションが少なすぎる → **各ステップで検証する**
 
 ## プロジェクト構造
 

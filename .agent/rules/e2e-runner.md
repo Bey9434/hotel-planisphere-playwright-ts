@@ -23,18 +23,19 @@ description: PlaywrightのE2Eテスト実装・保守。POM設計、ロケータ
 
 複雑なシナリオや、永続的なテストコードを作成する場合は、標準のPlaywrightを使用します。
 
-### アーキテクチャ: Class-based POM (必須)
+### アーキテクチャ: Functional POM (推奨)
 
 **構造**:
 
-- `pages/{PageName}.ts`: ロケーターとアクション（メソッド）を定義
+- `pages/{PageName}.ts`: ロケーターとアクション（関数）を定義
 - `tests/{Feature}.spec.ts`: シナリオとアサーションを定義
 
 **ルール**:
 
 - `.spec.ts` ファイル内に `page.locator(...)` を直接書くことは**禁止**
 - 必ず Page Object 内にカプセル化してください
-- Page Objectクラスは状態を持たず、ロケーターとアクションの定義に集中させてください（Stateless）
+- Page Objectは**クラスではなく関数**として実装し、`page` オブジェクトを引数として受け取ってください (Stateless & Pure Functions)
+- 副作用を最小限に抑え、テスタビリティを高めてください
 
 ### ロケーター優先順位 (Accessibility First) - 厳守
 
@@ -113,7 +114,7 @@ test("flaky: マーケット検索", async ({ page }) => {
 
 ## プロジェクト構造
 
-- `pages/`: Page Objects (クラスベース)
+- `pages/`: Page Objects (関数ベース)
 - `tests/`: テストシナリオ (\*.spec.ts)
 - `config/`: 環境設定ファイルなど
 - `playwright.config.ts`: 設定ファイル

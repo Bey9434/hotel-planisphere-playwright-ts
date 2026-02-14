@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "npx playwright test",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write ."
   },
   "keywords": [],
   "author": "",
@@ -15,14 +19,16 @@
     "pnpm": "10.28.0"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown",
-    "*.{ts,mts}": "eslint --fix"
+    "*.{ts,mts}": "eslint --fix",
+    "**/*": "prettier --write --ignore-unknown"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "@playwright/test": "^1.58.0",
     "@types/node": "^25.0.10",
     "eslint": "^9.39.2",
+    "eslint-plugin-boundaries": "^5.4.0",
+    "eslint-plugin-functional": "^9.0.2",
     "eslint-plugin-playwright": "^2.5.1",
     "globals": "^17.3.0",
     "husky": "^9.1.7",
@@ -30,5 +36,9 @@
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
     "typescript-eslint": "^8.55.0"
+  },
+  "dependencies": {
+    "neverthrow": "^8.2.0",
+    "zod": "^4.3.6"
   }
 }

@@ -4,9 +4,9 @@ import tseslint from "typescript-eslint";
 import playwright from "eslint-plugin-playwright";
 import functional from "eslint-plugin-functional";
 import boundaries from "eslint-plugin-boundaries";
-import { defineConfig } from "eslint/config";
 
-export default defineConfig([
+// tseslint.config() はプラグインの型互換性が柔軟で、typescript-eslint 公式推奨パターン
+export default tseslint.config(
   // lint対象外
   {
     ignores: [
@@ -19,8 +19,7 @@ export default defineConfig([
   // JS/TS ファイルに推奨ルールを適用
   {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
-    plugins: { js },
-    extends: ["js/recommended"],
+    extends: [js.configs.recommended],
     languageOptions: { globals: globals.browser },
   },
   // TypeScript 型チェック付き推奨ルール
@@ -28,8 +27,7 @@ export default defineConfig([
 
   // 関数型プログラミング推奨ルール (eslint-plugin-functional)
   {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
-    plugins: { functional: functional as any },
+    plugins: { functional },
     rules: {
       "functional/no-classes": "error",
       "functional/no-this-expressions": "error",
@@ -42,11 +40,10 @@ export default defineConfig([
   {
     plugins: { boundaries },
     settings: {
-      "boundaries/include": ["src/**/*", "tests/**/*"],
+      "boundaries/include": ["pages/**/*", "tests/**/*"],
       "boundaries/elements": [
-        { type: "pages", pattern: "src/pages" }, // POM & Logic (Application Layer)
-        { type: "fixtures", pattern: "src/fixtures" }, // Test Fixtures
-        { type: "tests", pattern: "tests" }, // E2E Tests
+        { type: "pages", pattern: "pages" },
+        { type: "tests", pattern: "tests" },
       ],
     },
     rules: {
@@ -55,9 +52,8 @@ export default defineConfig([
         {
           default: "disallow", // 原則禁止
           rules: [
-            // 上位レイヤーは下位レイヤーにのみ依存可能
-            { from: "fixtures", allow: ["pages"] },
-            { from: "tests", allow: ["pages", "fixtures"] },
+            // tests から pages への import のみ
+            { from: "tests", allow: ["pages"] },
           ],
         },
       ],
@@ -85,4 +81,4 @@ export default defineConfig([
       "functional/no-expression-statements": "off", // expect(...) は式
     },
   },
-]);
+);

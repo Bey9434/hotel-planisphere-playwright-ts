@@ -1,13 +1,48 @@
 import { test, expect } from "@playwright/test";
+import {
+  navigateToLogin,
+  getEmailInput,
+  getPasswordInput,
+  getSubmitButton,
+  getHeading,
+  getEmailErrorMessage,
+  getPasswordErrorMessage,
+  login,
+} from "../pages/login.page";
 
-test("login", async ({ page }) => {
-    await page.goto("login");
-    // ログインタイトルが表示されているか
-    await expect(page.getByRole("heading", { name: "ログイン" })).toBeVisible();
-    // ユーザー名の入力欄が表示されているか
-    await expect(page.getByLabel("ユーザー名", { exact: true })).toBeVisible();
-    // パスワードの入力欄が表示されているか
-    await expect(page.getByLabel("パスワード", { exact: true })).toBeVisible();
-    // ログインボタンが表示されているか
-    await expect(page.getByRole("button", { name: "ログイン", exact: true })).toBeVisible();
+test.describe("ログイン機能", () => {
+  test("タイトルが表示されるか", async ({ page }) => {
+    await navigateToLogin(page);
+    await expect(getHeading(page)).toBeVisible();
+  });
+
+  test("メールアドレスとパスワードの入力欄が表示されているか", async ({
+    page,
+  }) => {
+    await navigateToLogin(page);
+    await expect(getEmailInput(page)).toBeVisible();
+    await expect(getPasswordInput(page)).toBeVisible();
+  });
+
+  test("メールアドレスとパスワードが未入力の時、エラーメッセージが表示されるか", async ({
+    page,
+  }) => {
+    await navigateToLogin(page);
+    await getSubmitButton(page).click();
+    await expect(getEmailErrorMessage(page)).toHaveText(
+      "このフィールドを入力してください。",
+    );
+    await expect(getPasswordInput(page)).toBeVisible();
+    await expect(getPasswordErrorMessage(page)).toHaveText(
+      "このフィールドを入力してください。",
+    );
+  });
+
+  test("メールアドレスとパスワードが正しく入力されている場合、マイページに遷移するか", async ({
+    page,
+  }) => {
+    await navigateToLogin(page);
+    await login(page);
+    await expect(page).toHaveTitle(/マイページ/);
+  });
 });

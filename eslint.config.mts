@@ -6,7 +6,6 @@ import functional from "eslint-plugin-functional";
 import boundaries from "eslint-plugin-boundaries";
 import prettierConfig from "eslint-config-prettier";
 
-// tseslint.config() はプラグインの型互換性が柔軟で、typescript-eslint 公式推奨パターン
 export default tseslint.config(
   // lint対象外
   {
@@ -47,7 +46,7 @@ export default tseslint.config(
     },
   },
 
-  // アーキテクチャ境界ルール (eslint-plugin-boundaries)
+  // アーキテクチャルール (eslint-plugin-boundaries)
   {
     plugins: { boundaries },
     settings: {
@@ -90,6 +89,25 @@ export default tseslint.config(
       ...playwright.configs["flat/recommended"].rules,
       "functional/no-return-void": "off", // テストは副作用必須
       "functional/no-expression-statements": "off", // expect(...) は式
+
+      // recommendedのwarnをerrorにする。
+      "playwright/consistent-spacing-between-blocks": "error",
+      "playwright/expect-expect": "error",
+      "playwright/max-nested-describe": "error",
+      "playwright/no-conditional-expect": "error",
+      "playwright/no-conditional-in-test": "error",
+      "playwright/no-element-handle": "error",
+      "playwright/no-eval": "error",
+      "playwright/no-force-option": "error",
+      "playwright/no-nested-step": "error",
+      "playwright/no-page-pause": "error",
+      "playwright/no-skipped-test": "error",
+      "playwright/no-useless-await": "error",
+      "playwright/no-useless-not": "error",
+      "playwright/no-wait-for-selector": "error",
+      "playwright/no-wait-for-timeout": "error",
+
+      // recommended に含まれない追加ルール
       "playwright/no-slowed-test": "error",
       "playwright/no-raw-locators": "error",
       "playwright/prefer-native-locators": "error",
@@ -106,7 +124,6 @@ export default tseslint.config(
       "playwright/require-top-level-describe": "error",
       "playwright/prefer-comparison-matcher": "error",
       "playwright/prefer-equality-matcher": "error",
-      "playwright/consistent-spacing-between-blocks": "error",
     },
   },
 

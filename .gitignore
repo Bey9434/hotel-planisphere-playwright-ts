@@ -1,10 +1,10 @@
 # Documentation (Internal use only - interview prep)
-#docs/
+docs/
 
 # AI Development Tools (Internal use only)
-#.agent/rules/glossary.md
-#.agent/skills/glossary/SKILL.md
-#.agent/workflows/add-glossary.md
+.agent/rules/glossary.md
+.agent/skills/glossary/SKILL.md
+.agent/workflows/add-glossary.md
 
 # Playwright
 /blob-report/

@@ -7,7 +7,7 @@ import {
   getHeading,
   getEmailErrorMessage,
   getPasswordErrorMessage,
-  login,
+  loginWithCredentials,
 } from "../pages/login.page";
 
 test.describe("ログイン機能", () => {
@@ -42,7 +42,7 @@ test.describe("ログイン機能", () => {
     page,
   }) => {
     await navigateToLogin(page);
-    await login(page);
+    await loginWithCredentials(page, "ichiro@example.com", "password");
     await expect(page).toHaveTitle(/マイページ/);
   });
 });

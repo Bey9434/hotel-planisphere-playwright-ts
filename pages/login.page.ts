@@ -28,9 +28,14 @@ export const getEmailErrorMessage = (page: Readonly<Page>): Locator =>
 export const getPasswordErrorMessage = (page: Readonly<Page>): Locator =>
   page.locator("#password-message");
 
-// メールアドレスとパスワードを入力しログインする
-export const login = async (page: Readonly<Page>): Promise<void> => {
-  await getEmailInput(page).fill("ichiro@example.com");
-  await getPasswordInput(page).fill("password");
+// メールアドレスとパスワードを引数で受け取り、ログインする
+export const loginWithCredentials = async (
+  page: Readonly<Page>,
+  email: string,
+  password: string,
+): Promise<void> => {
+  await navigateToLogin(page);
+  await getEmailInput(page).fill(email);
+  await getPasswordInput(page).fill(password);
   await getSubmitButton(page).click();
 };

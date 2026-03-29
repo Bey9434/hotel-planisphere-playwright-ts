@@ -23,6 +23,9 @@ importers:
       "@types/node":
         specifier: ^25.0.10
         version: 25.0.10
+      dotenv:
+        specifier: ^17.3.1
+        version: 17.3.1
       eslint:
         specifier: ^9.39.2
         version: 9.39.2(jiti@2.6.1)
@@ -465,6 +468,13 @@ packages:
         integrity: sha512-HOJkrhaYsweh+W+e74Yn7YStZOilkoPb6fycpwNLKzSPtruFs48nYis0zy5yJz1+ktUhHxoRDJ27RQAWLIJVJw==,
       }
     engines: { node: ">=16.0.0" }
+
+  dotenv@17.3.1:
+    resolution:
+      {
+        integrity: sha512-IO8C/dzEb6O3F9/twg6ZLXz164a2fhTnEWb95H23Dm4OuN+92NmEAlTrupP9VW6Jm3sO26tQlqyvyi4CsnY9GA==,
+      }
+    engines: { node: ">=12" }
 
   emoji-regex@10.6.0:
     resolution:
@@ -1629,6 +1639,8 @@ snapshots:
   deep-is@0.1.4: {}
 
   deepmerge-ts@7.1.5: {}
+
+  dotenv@17.3.1: {}
 
   emoji-regex@10.6.0: {}
 

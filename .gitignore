@@ -13,3 +13,6 @@ docs/
 /playwright/.cache/
 /test-results/
 node_modules/
+
+# Environment variables
+.env

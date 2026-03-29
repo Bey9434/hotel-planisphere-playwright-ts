@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { TITLE_HOME } from "../pages/locator";
 
 test.describe("Smoke Test", () => {
   test("Smoke Test: トップページが表示されること", async ({ page }) => {
@@ -6,8 +7,6 @@ test.describe("Smoke Test", () => {
     await page.goto("/");
 
     // Assert: タイトルが期待通りであることを確認
-    await expect(page).toHaveTitle(
-      "HOTEL PLANISPHERE - テスト自動化練習サイト",
-    );
+    await expect(page).toHaveTitle(TITLE_HOME);
   });
 });

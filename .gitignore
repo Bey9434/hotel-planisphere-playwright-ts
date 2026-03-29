@@ -15,4 +15,4 @@ docs/
 node_modules/
 
 # Environment variables
-.env
+.env.keys

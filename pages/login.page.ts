@@ -1,4 +1,5 @@
 import type { Locator, Page } from "@playwright/test";
+import { HEADING_LOGIN, LABEL_EMAIL, LABEL_PASSWORD } from "./locator";
 
 // ログインページへ遷移する
 export const navigateToLogin = (page: Readonly<Page>): Promise<unknown> =>
@@ -6,15 +7,15 @@ export const navigateToLogin = (page: Readonly<Page>): Promise<unknown> =>
 
 // ログインページの見出しを取得する
 export const getHeading = (page: Readonly<Page>): Locator =>
-  page.getByRole("heading", { name: "ログイン" });
+  page.getByRole("heading", { name: HEADING_LOGIN });
 
 // メールアドレス入力欄を取得する
 export const getEmailInput = (page: Readonly<Page>): Locator =>
-  page.getByLabel("メールアドレス");
+  page.getByLabel(LABEL_EMAIL);
 
 // パスワード入力欄を取得する
 export const getPasswordInput = (page: Readonly<Page>): Locator =>
-  page.getByLabel("パスワード");
+  page.getByLabel(LABEL_PASSWORD);
 
 // ログインボタンを取得する
 export const getSubmitButton = (page: Readonly<Page>): Locator =>
@@ -28,9 +29,14 @@ export const getEmailErrorMessage = (page: Readonly<Page>): Locator =>
 export const getPasswordErrorMessage = (page: Readonly<Page>): Locator =>
   page.locator("#password-message");
 
-// メールアドレスとパスワードを入力しログインする
-export const login = async (page: Readonly<Page>): Promise<void> => {
-  await getEmailInput(page).fill("ichiro@example.com");
-  await getPasswordInput(page).fill("password");
+// メールアドレスとパスワードを引数で受け取り、ログインする
+export const loginWithCredentials = async (
+  page: Readonly<Page>,
+  email: string,
+  password: string,
+): Promise<void> => {
+  await navigateToLogin(page);
+  await getEmailInput(page).fill(email);
+  await getPasswordInput(page).fill(password);
   await getSubmitButton(page).click();
 };

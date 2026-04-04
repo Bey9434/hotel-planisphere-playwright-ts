@@ -7,8 +7,9 @@ import {
   getHeading,
   getEmailErrorMessage,
   getPasswordErrorMessage,
-  login,
+  loginWithCredentials,
 } from "../pages/login.page";
+import { GENERAL_USER } from "../config/credentials";
 
 test.describe("ログイン機能", () => {
   test("タイトルが表示されるか", async ({ page }) => {
@@ -42,7 +43,7 @@ test.describe("ログイン機能", () => {
     page,
   }) => {
     await navigateToLogin(page);
-    await login(page);
+    await loginWithCredentials(page, GENERAL_USER.email, GENERAL_USER.password);
     await expect(page).toHaveTitle(/マイページ/);
   });
 });

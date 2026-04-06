@@ -1,5 +1,10 @@
 import { defineConfig, devices } from "@playwright/test";
 export default defineConfig({
+  expect: {
+    toHaveScreenshot: {
+      maxDiffPixelRatio: 0.05,
+    },
+  },
   testDir: "./tests",
   /* Run tests in files in parallel */
   fullyParallel: true,

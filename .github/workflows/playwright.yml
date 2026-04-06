@@ -61,6 +61,7 @@ jobs:
         run: pnpm run test:all
         env:
           DOTENV_PRIVATE_KEY: ${{ secrets.DOTENV_PRIVATE_KEY }}
+          HOME: /root
 
       - uses: actions/upload-artifact@v6
         if: ${{ !cancelled() }}

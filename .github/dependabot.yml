@@ -1,0 +1,17 @@
+version: 2
+updates:
+  # npm パッケージ（pnpm 管理を含む）の定期アップデート
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly" # 毎週チェック
+    commit-message:
+      prefix: "chore(deps)"
+
+  # GitHub Actions と Playwright Docker の定期アップデート
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly" # 毎週チェック
+    commit-message:
+      prefix: "chore(deps)"

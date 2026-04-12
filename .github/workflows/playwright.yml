@@ -66,7 +66,7 @@ jobs:
 
       # blob: マトリックス完了後に merge-reports job でまとめる
       - name: Run Playwright tests (${{ matrix.browser }})
-        run: npx playwright test --project=${{ matrix.browser }} --reporter=blob
+        run: npx dotenvx run -- npx playwright test --project=${{ matrix.browser }} --reporter=blob
         env:
           DOTENV_PRIVATE_KEY: ${{ secrets.DOTENV_PRIVATE_KEY }}
           HOME: /root

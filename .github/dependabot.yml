@@ -1,0 +1,29 @@
+version: 2
+
+# npm と github-actions の更新を1つのPRにまとめ、バージョン不一致を防ぐ
+# 参考: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#multi-ecosystem-groups-
+multi-ecosystem-groups:
+  playwright:
+    schedule:
+      interval: "weekly" # 毎週まとめて更新チェック
+
+updates:
+  # npm パッケージ（@playwright/test など）の定期アップデート
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    patterns: ["@playwright/*"] # @playwright 関連のみ playwright グループ対象
+    multi-ecosystem-group: "playwright" # github-actions と1つのPRにまとめる
+    commit-message:
+      prefix: "chore(deps)"
+
+  # GitHub Actions と Playwright Docker イメージの定期アップデート
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    patterns: ["*"] # 全ての Actions / Docker イメージを対象
+    multi-ecosystem-group: "playwright" # npm と1つのPRにまとめる
+    commit-message:
+      prefix: "chore(deps)"

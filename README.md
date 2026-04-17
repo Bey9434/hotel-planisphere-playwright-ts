@@ -14,7 +14,7 @@
 | **設計パターン** | Functional Page Object Model（関数型 POM）                                             |
 | **CI/CD**        | GitHub Actions で自動テスト実行                                                        |
 
-## テスト戦略
+## テストケース
 
 ### 機能テスト
 
@@ -51,12 +51,6 @@ export const loginWithCredentials = async (
   await getSubmitButton(page).click();
 };
 ```
-
-**なぜ関数型 POM を選んだのか:**
-
-- **テスタビリティ**: 副作用がなく、テストしやすい
-- **シンプルさ**: `this` やコンストラクタが不要
-- **合成可能性**: 関数同士を自由に組み合わせられる
 
 ### ロケーター優先順位（Accessibility First）
 
@@ -137,14 +131,11 @@ npx playwright install --with-deps
 ## テストの実行
 
 ```bash
-# Chromium のみで実行（推奨・高速）
+# 全ブラウザ（Chromium / Firefox / Webkit）で E2E テストを実行
 pnpm test
 
-# 全ブラウザ（Chromium / Firefox / Webkit）で実行
-pnpm test:all
-
 # UI モードで実行（デバッグに便利）
-npx playwright test --ui
+pnpm run test:ui
 ```
 
 テスト結果は `playwright-report/` に HTML レポートとして出力されます。
@@ -154,7 +145,7 @@ npx playwright test --ui
 pnpm exec playwright show-report
 ```
 
-## リント & フォーマット
+## lint & format
 
 ```bash
 # ESLint 実行
@@ -171,8 +162,9 @@ pnpm format
 
 ## CI/CD
 
-GitHub Actions により、`main` / `master` ブランチへの Push および Pull Request 時にテストが自動実行されます。
+GitHub Actions により、`main` / `master` ブランチへの Push および Pull Request 時に高度に最適化されたテスト自動化パイプラインが実行されます。
 
-- **テスト実行**: 全ブラウザ（Chromium / Firefox / Webkit）で E2E テストを実行
-- **レポート保存**: テスト結果を Playwright HTML レポートとしてアーティファクトに保存（30 日間保持）
-- **環境変数**: `dotenvx` + GitHub Secrets による安全な復号
+- **マトリックス実行と並列化**: Chromium / Firefox / Webkit のテストを GitHub Actions の Matrix Strategy で並列（パラレル）に実行し、CI の実行時間を大幅に短縮しています。
+- **レポートのマージとデプロイ**: 各ブラウザごとの `blob` レポートを 1 つの HTML レポートに自動マージ（`merge-reports`）し、`main` ブランチへのマージ完了時は自動的に GitHub Pages へテストレポートがデプロイ・公開されます。
+- **環境変数（クレデンシャル管理）**: `dotenvx` と GitHub Secrets を連携させ、セキュアにテスト用のアカウント情報を復号してテストを実行します。
+- **定期的な依存関係のアップデート**: Dependabot の `multi-ecosystem-groups` を導入し、Playwright の npm パッケージ（`@playwright/test`）と GitHub Actions のコンテナイメージ（Playwright 公式 Docker）のアップデートを必ず 1 つの Pull Request にまとめます。これにより、npm パッケージと Docker イメージのバージョン不一致による CI 環境の依存関係エラーを防止しています。

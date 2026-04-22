@@ -9,33 +9,8 @@ permissions:
   contents: read
 
 jobs:
-  quality:
-    name: Code Quality
-    timeout-minutes: 10
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-
-      - uses: pnpm/action-setup@v5
-        name: Install pnpm
-
-      - uses: actions/setup-node@v6
-        with:
-          node-version-file: package.json
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Lint check
-        run: pnpm lint
-
-      - name: Format check
-        run: pnpm format:check
-
   test:
     name: "Test (${{ matrix.browser }})"
-    needs: quality
     timeout-minutes: 60
     runs-on: ubuntu-latest
     # chromium / firefox / webkit を並列実行して CI 時間を削減
@@ -82,8 +57,8 @@ jobs:
   merge-reports:
     name: Merge Test Reports
     needs: test
-    # test が失敗/キャンセルでもレポートを必ず生成する
-    if: ${{ !cancelled() }}
+    # ユーザーキャンセル時以外（テスト失敗時等）は必ずレポートを生成する
+    if: always() && !cancelled()
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6

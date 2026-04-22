@@ -34,8 +34,8 @@ description: PlaywrightのE2Eテスト実装・保守。POM設計、ロケータ
 
 - `.spec.ts` ファイル内に `page.locator(...)` を直接書くことは**禁止**
 - 必ず Page Object 内にカプセル化してください
-- Page Objectは**クラスではなく関数**として実装し、`page` オブジェクトを引数として受け取ってください (Stateless & Pure Functions)
-- 副作用を最小限に抑え、テスタビリティを高めてください
+- Page Objectは**クラスではなく関数**として実装し、内部状態(State)を持たないように記述してください（UI操作を伴うため厳密な純粋関数にはなりませんが、DOM以外の状態変数は排除してください）。
+- **ロケーターの露出**: テストファイル側での検証（アサーション）を可能にするため、操作関数だけでなく **「ロケーター単体を返す関数」も個別に export する** 運用を標準としてください（例: `const getSubmitBtn = (page) => page.getByRole(...)`）。
 
 ### ロケーター優先順位 (Accessibility First) - 厳守
 
@@ -77,9 +77,9 @@ test("flaky: マーケット検索", async ({ page }) => {
 
 ### 主な原因と対策
 
-- **レースコンディション**: 自動待機ロケーターを使用
+- **レースコンディション**: 自動待機ロケーター（`toBeVisible`など）を使用
 - **ネットワークタイミング**: `waitForResponse` を使用
-- **アニメーション**: `networkidle` を待機
+- **アニメーション**: ローディング要素等が消えるのを待機（`expect(locator).toBeHidden()`）。※ `networkidle` はタイムアウトの温床になるため原則使用禁止
 
 ## 4. 対話ワークフロー
 

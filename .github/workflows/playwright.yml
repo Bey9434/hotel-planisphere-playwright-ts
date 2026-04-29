@@ -32,7 +32,7 @@ jobs:
       - name: Configure git safe directory
         run: git config --global --add safe.directory $GITHUB_WORKSPACE
 
-      - uses: pnpm/action-setup@v5
+      - uses: pnpm/action-setup@v6
         name: Install pnpm
 
       - uses: actions/setup-node@v6
@@ -51,7 +51,7 @@ jobs:
           HOME: /root
 
       # blob レポートをアーティファクトとして保存（merge-reports job が収集する）
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         if: ${{ !cancelled() }}
         with:
           name: blob-report-${{ matrix.browser }}
@@ -67,7 +67,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v5
+      - uses: pnpm/action-setup@v6
         name: Install pnpm
 
       - uses: actions/setup-node@v6
@@ -79,7 +79,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       # 3ブラウザ分の blob レポートを全て取得
-      - uses: actions/download-artifact@v6
+      - uses: actions/download-artifact@v8
         with:
           path: all-blob-reports
           pattern: blob-report-*
@@ -95,7 +95,7 @@ jobs:
           fi
 
       # 最終的な HTML レポートを deploy-report job のために保存
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: playwright-report
           path: playwright-report/
@@ -113,14 +113,14 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v6
+      - uses: actions/download-artifact@v8
         with:
           name: playwright-report
           path: playwright-report/
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: playwright-report/
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

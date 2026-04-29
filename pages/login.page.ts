@@ -19,14 +19,16 @@ export const getPasswordInput = (page: Readonly<Page>): Locator =>
 
 // ログインボタンを取得する
 export const getSubmitButton = (page: Readonly<Page>): Locator =>
+  // eslint-disable-next-line playwright/no-raw-locators
   page.locator("#login-button");
 
 // メールアドレスのエラーメッセージを取得する
 export const getEmailErrorMessage = (page: Readonly<Page>): Locator =>
+  // eslint-disable-next-line playwright/no-raw-locators
   page.locator("#email-message");
 
-// パスワードのエラーメッセージを取得する
 export const getPasswordErrorMessage = (page: Readonly<Page>): Locator =>
+  // eslint-disable-next-line playwright/no-raw-locators
   page.locator("#password-message");
 
 // メールアドレスとパスワードを引数で受け取り、ログインする

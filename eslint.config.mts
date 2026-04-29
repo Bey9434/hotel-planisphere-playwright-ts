@@ -84,7 +84,7 @@ export default tseslint.config(
   // Playwright 推奨ルール（テストファイルのみに適用）
   {
     ...playwright.configs["flat/recommended"],
-    files: ["tests/**/*.spec.ts"],
+    files: ["tests/**/*.spec.ts", "pages/**/*.ts"],
     rules: {
       ...playwright.configs["flat/recommended"].rules,
       "functional/no-return-void": "off", // テストは副作用必須

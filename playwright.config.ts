@@ -12,8 +12,8 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
-  /* Playwrightデフォルト（CPUコア数の50%）を使用。ubuntu-latest(4コア)では2ワーカーで並列実行される */
-  workers: undefined,
+  /* CI(ubuntu-latest)は4コアであるため2ワーカーで並列実行する */
+  workers: process.env.CI ? 2 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: "html",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */

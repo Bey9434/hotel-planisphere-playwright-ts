@@ -83,7 +83,12 @@ jobs:
 
       # 3つの blob レポートを1つの HTML レポートにまとめる
       - name: Merge blob reports into HTML report
-        run: npx playwright merge-reports --reporter html ./all-blob-reports
+        run: |
+          if [ -d "./all-blob-reports" ]; then
+            npx playwright merge-reports --reporter html ./all-blob-reports
+          else
+            echo "No blob reports found. Skipping merge."
+          fi
 
       # 最終的な HTML レポートを deploy-report job のために保存
       - uses: actions/upload-artifact@v6

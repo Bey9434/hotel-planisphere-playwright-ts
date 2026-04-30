@@ -13,8 +13,27 @@ permissions:
   contents: read
 
 jobs:
+  # package.json から Playwright バージョンを動的に取得する
+  # Dependabot が package.json を更新するだけで Docker イメージも自動で追従する
+  setup:
+    name: Setup
+    runs-on: ubuntu-latest
+    outputs:
+      playwright-version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: package.json から Playwright バージョンを取得
+        id: version
+        run: |
+          # "^1.58.0" → "1.58.0" のように、セマンティックバージョンのみを抽出
+          version=$(jq -r '.devDependencies["@playwright/test"]' package.json | sed 's/[^0-9.]//g')
+          echo "playwright-version=${version}"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+
   test:
     name: "Test (${{ matrix.browser }})"
+    needs: setup
     timeout-minutes: 60
     runs-on: ubuntu-latest
     # chromium / firefox / webkit を並列実行して CI 時間を削減
@@ -24,7 +43,8 @@ jobs:
       matrix:
         browser: [chromium, firefox, webkit]
     container:
-      image: mcr.microsoft.com/playwright:v1.58.0-jammy
+      # setup job が package.json から取得したバージョンで Docker イメージを動的に指定
+      image: mcr.microsoft.com/playwright:v${{ needs.setup.outputs.playwright-version }}-jammy
       options: --ipc=host
     steps:
       - uses: actions/checkout@v6

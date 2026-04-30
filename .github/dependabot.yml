@@ -9,6 +9,11 @@ updates:
       interval: "weekly"
     commit-message:
       prefix: "chore(deps)"
+    # npm関連の全パッケージ更新を1つのPRにまとめる
+    groups:
+      npm-dependencies:
+        patterns:
+          - "*"
 
   # GitHub Actions（actions/checkout 等）の定期アップデート
   - package-ecosystem: "github-actions"
@@ -17,3 +22,8 @@ updates:
       interval: "weekly"
     commit-message:
       prefix: "chore(deps)"
+    # Actions関連の全更新を1つのPRにまとめる
+    groups:
+      github-actions:
+        patterns:
+          - "*"

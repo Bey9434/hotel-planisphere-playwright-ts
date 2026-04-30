@@ -25,10 +25,3 @@ updates:
       interval: "weekly"
     patterns: ["*"] # 全ての Actions / Docker イメージを対象
     multi-ecosystem-group: "playwright" # npm と1つのPRにまとめる
-
-  - package-ecosystem: "docker"
-    directory: ".github/workflows"
-    schedule:
-      interval: "weekly"
-    patterns: ["*"]
-    multi-ecosystem-group: "playwright"

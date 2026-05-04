@@ -1,9 +1,10 @@
 import type { Locator, Page } from "@playwright/test";
 import { HEADING_LOGIN, LABEL_EMAIL, LABEL_PASSWORD } from "./locator";
+import { PATHS } from "./paths";
 
 // ログインページへ遷移する
 export const navigateToLogin = (page: Readonly<Page>): Promise<unknown> =>
-  page.goto("login");
+  page.goto(PATHS.LOGIN);
 
 // ログインページの見出しを取得する
 export const getHeading = (page: Readonly<Page>): Locator =>

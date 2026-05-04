@@ -1,7 +1,9 @@
 // ページタイトル
-export const TITLE_HOME = "HOTEL PLANISPHERE - テスト自動化練習サイト" as const; // smoke.spec.ts
-export const TITLE_PLANS =
-  "宿泊プラン一覧 | HOTEL PLANISPHERE - テスト自動化練習サイト" as const; // plans.page.ts
+export const TITLES = {
+  HOME: "HOTEL PLANISPHERE - テスト自動化練習サイト",
+  PLANS: "宿泊プラン一覧 | HOTEL PLANISPHERE - テスト自動化練習サイト",
+  LOGIN: "ログイン | HOTEL PLANISPHERE - テスト自動化練習サイト",
+} as const;
 
 // プラン名
 export const PLAN_TOKUTEN = "お得な特典付きプラン" as const;

@@ -3,7 +3,7 @@
  * PATHS は baseURL ("/ja/") からの相対パスとして定義します。
  */
 export const PATHS = {
-  HOME: "/",
+  HOME: "./",
   LOGIN: "login",
   PLANS: "plans.html",
   MY_PAGE: "mypage.html",

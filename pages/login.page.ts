@@ -38,7 +38,6 @@ export const loginWithCredentials = async (
   email: string,
   password: string,
 ): Promise<void> => {
-  await navigateToLogin(page);
   await getEmailInput(page).fill(email);
   await getPasswordInput(page).fill(password);
   await getSubmitButton(page).click();

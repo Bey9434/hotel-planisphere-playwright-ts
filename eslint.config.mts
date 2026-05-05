@@ -42,7 +42,7 @@ export default tseslint.config(
       // import type の使い方を統一（型は import type で明示）
       "@typescript-eslint/consistent-type-imports": "error",
       // console.log の消し忘れ防止
-      "no-console": "warn",
+      "no-console": "error",
     },
   },
 
@@ -57,17 +57,19 @@ export default tseslint.config(
       ],
     },
     rules: {
-      "boundaries/element-types": [
+      "boundaries/dependencies": [
         "error",
         {
           default: "disallow", // 原則禁止
           rules: [
             // tests から pages への import のみ
-            { from: "tests", allow: ["pages"] },
+            {
+              from: { type: "tests" },
+              allow: { to: { type: "pages" } },
+            },
           ],
         },
       ],
-      "boundaries/no-private": "error",
     },
   },
 

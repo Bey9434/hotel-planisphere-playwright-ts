@@ -6,13 +6,6 @@ settings:
 
 importers:
   .:
-    dependencies:
-      neverthrow:
-        specifier: ^8.2.0
-        version: 8.2.0
-      zod:
-        specifier: ^4.4.2
-        version: 4.4.2
     devDependencies:
       "@axe-core/playwright":
         specifier: ^4.11.3
@@ -224,15 +217,6 @@ packages:
       }
     engines: { node: ">=18" }
     hasBin: true
-
-  "@rollup/rollup-linux-x64-gnu@4.57.1":
-    resolution:
-      {
-        integrity: sha512-ABca4ceT4N+Tv/GtotnWAeXZUZuM/9AQyCyKYyKnpk4yoA7QIAuBt6Hkgpw8kActYlew2mvckXkvx0FfoInnLg==,
-      }
-    cpu: [x64]
-    os: [linux]
-    libc: [glibc]
 
   "@types/esrecurse@4.3.1":
     resolution:
@@ -1075,13 +1059,6 @@ packages:
         integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==,
       }
 
-  neverthrow@8.2.0:
-    resolution:
-      {
-        integrity: sha512-kOCT/1MCPAxY5iUV3wytNFUMUolzuwd/VF/1KCx7kf6CutrOsTie+84zTGTpgQycjvfLdBBdvBvFLqFD2c0wkQ==,
-      }
-    engines: { node: ">=18" }
-
   npm-run-path@4.0.1:
     resolution:
       {
@@ -1477,12 +1454,6 @@ packages:
       }
     engines: { node: ">=18" }
 
-  zod@4.4.2:
-    resolution:
-      {
-        integrity: sha512-IynmDyxsEsb9RKzO3J9+4SxXnl2FTFSzNBaKKaMV6tsSk0rw9gYw9gs+JFCq/qk2LCZ78KDwyj+Z289TijSkUw==,
-      }
-
 snapshots:
   "@axe-core/playwright@4.11.3(playwright-core@1.59.1)":
     dependencies:
@@ -1581,9 +1552,6 @@ snapshots:
   "@playwright/test@1.59.1":
     dependencies:
       playwright: 1.59.1
-
-  "@rollup/rollup-linux-x64-gnu@4.57.1":
-    optional: true
 
   "@types/esrecurse@4.3.1": {}
 
@@ -2094,10 +2062,6 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  neverthrow@8.2.0:
-    optionalDependencies:
-      "@rollup/rollup-linux-x64-gnu": 4.57.1
-
   npm-run-path@4.0.1:
     dependencies:
       path-key: 3.1.1
@@ -2289,5 +2253,3 @@ snapshots:
       yoctocolors: 2.1.2
 
   yoctocolors@2.1.2: {}
-
-  zod@4.4.2: {}

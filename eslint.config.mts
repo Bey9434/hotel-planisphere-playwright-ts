@@ -42,7 +42,7 @@ export default tseslint.config(
       // import type の使い方を統一（型は import type で明示）
       "@typescript-eslint/consistent-type-imports": "error",
       // console.log の消し忘れ防止
-      "no-console": "warn",
+      "no-console": "error",
     },
   },
 

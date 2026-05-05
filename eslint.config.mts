@@ -65,7 +65,7 @@ export default tseslint.config(
             // tests から pages への import のみ
             {
               from: { type: "tests" },
-              allow: [{ to: { type: "pages" } }],
+              allow: { to: { type: "pages" } },
             },
           ],
         },

@@ -19,6 +19,7 @@ export const getPasswordInput = (page: Readonly<Page>): Locator =>
   page.getByLabel(LABEL_PASSWORD);
 
 // ログインボタンを取得する
+// 備考: サイト側のHTML不備(リンクにrole="button"がある)によりセマンティック取得が困難なため、例外的にIDを使用
 export const getSubmitButton = (page: Readonly<Page>): Locator =>
   // eslint-disable-next-line playwright/no-raw-locators
   page.locator("#login-button");

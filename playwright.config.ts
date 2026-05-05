@@ -38,11 +38,13 @@ export default defineConfig({
     {
       name: "firefox",
       use: { ...devices["Desktop Firefox"] },
+      testIgnore: /vrt\.spec\.ts/,
     },
 
     {
       name: "webkit",
       use: { ...devices["Desktop Safari"] },
+      testIgnore: /vrt\.spec\.ts/,
     },
   ],
 });

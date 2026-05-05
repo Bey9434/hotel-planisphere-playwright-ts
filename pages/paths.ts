@@ -4,7 +4,7 @@
  */
 export const PATHS = {
   HOME: "./",
-  LOGIN: "login",
+  LOGIN: "login.html",
   PLANS: "plans.html",
   MY_PAGE: "mypage.html",
   SIGNUP: "signup.html",

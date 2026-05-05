@@ -57,17 +57,19 @@ export default tseslint.config(
       ],
     },
     rules: {
-      "boundaries/element-types": [
+      "boundaries/dependencies": [
         "error",
         {
           default: "disallow", // 原則禁止
           rules: [
             // tests から pages への import のみ
-            { from: "tests", allow: ["pages"] },
+            {
+              from: { type: "tests" },
+              allow: [{ to: { type: "pages" } }],
+            },
           ],
         },
       ],
-      "boundaries/no-private": "error",
     },
   },
 

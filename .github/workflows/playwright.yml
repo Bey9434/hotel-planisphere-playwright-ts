@@ -124,7 +124,7 @@ jobs:
   deploy-report:
     name: Deploy Report
     needs: merge-reports
-    if: github.ref == 'refs/heads/main' && always()
+    if: github.ref == 'refs/heads/main' && always() && !cancelled()
     permissions:
       pages: write
       id-token: write

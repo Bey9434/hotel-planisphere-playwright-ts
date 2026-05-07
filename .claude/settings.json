@@ -6,8 +6,12 @@
       "Bash(pnpm lint*)",
       "Bash(pnpm format*)",
       "Bash(pnpm test*)",
-      "Bash(gh pr *)",
-      "Bash(gh issue *)",
+      "Bash(gh pr view*)",
+      "Bash(gh pr list*)",
+      "Bash(gh pr status*)",
+      "Bash(gh pr checks*)",
+      "Bash(gh issue view*)",
+      "Bash(gh issue list*)",
       "Bash(git diff*)",
       "Bash(git log*)",
       "Bash(git status*)",
@@ -27,7 +31,13 @@
       "Bash(echo $*TOKEN*)",
       "Bash(echo $*PRIVATE*)",
       "Bash(printenv*PASSWORD*)",
-      "Bash(printenv*SECRET*)"
+      "Bash(printenv*SECRET*)",
+      "Bash(printenv*TOKEN*)",
+      "Bash(printenv*PRIVATE*)",
+      "Bash(printenv)",
+      "Bash(printenv *)",
+      "Bash(env)",
+      "Bash(env *)"
     ]
   },
   "hooks": {
@@ -37,7 +47,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "file_path=$(cat - | jq -r '.tool_input.file_path // empty'); if [ -n \"$file_path\" ] && echo \"$file_path\" | grep -qE '\\.(ts|js|json)$'; then npx prettier --write \"$file_path\" 2>/dev/null || true; fi",
+            "command": "file_path=$(cat - | jq -r '.tool_input.file_path // empty'); if [ -n \"$file_path\" ] && echo \"$file_path\" | grep -qE '\\.(ts|js|json)$'; then pnpm exec prettier --write \"$file_path\" || true; fi",
             "timeout": 15000
           }
         ]

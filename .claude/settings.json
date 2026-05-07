@@ -1,0 +1,47 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx playwright test*)",
+      "Bash(npx tsc --noEmit)",
+      "Bash(pnpm lint*)",
+      "Bash(pnpm format*)",
+      "Bash(pnpm test*)",
+      "Bash(gh pr *)",
+      "Bash(gh issue *)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git status*)",
+      "Bash(git branch*)",
+      "Bash(ls *)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Read(.env.keys)",
+      "Bash(*cat*.env.keys*)",
+      "Bash(*less*.env.keys*)",
+      "Bash(*head*.env.keys*)",
+      "Bash(*tail*.env.keys*)",
+      "Bash(*grep*.env.keys*)",
+      "Bash(echo $*PASSWORD*)",
+      "Bash(echo $*SECRET*)",
+      "Bash(echo $*TOKEN*)",
+      "Bash(echo $*PRIVATE*)",
+      "Bash(printenv*PASSWORD*)",
+      "Bash(printenv*SECRET*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "file_path=$(cat - | jq -r '.tool_input.file_path // empty'); if [ -n \"$file_path\" ] && echo \"$file_path\" | grep -qE '\\.(ts|js|json)$'; then npx prettier --write \"$file_path\" 2>/dev/null || true; fi",
+            "timeout": 15000
+          }
+        ]
+      }
+    ]
+  }
+}

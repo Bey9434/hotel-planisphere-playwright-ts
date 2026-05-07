@@ -125,16 +125,6 @@ pnpm test
 | HIGH がある、またはバリデーション失敗    | **REQUEST CHANGES**         |
 | CRITICAL がある                          | **BLOCK**                   |
 
-### Phase 5 — 公開
-
-```bash
-# APPROVE の場合
-gh pr review $ARGUMENTS --approve --body "<レビューサマリ>"
-
-# REQUEST CHANGES の場合
-gh pr review $ARGUMENTS --request-changes --body "<修正が必要な箇所のサマリ>"
-```
-
 ---
 
 ## フォールバック

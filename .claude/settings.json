@@ -38,10 +38,14 @@
       "Bash(printenv *)",
       "Bash(env)",
       "Bash(env *)",
+      "Bash(*env*|*)",
+      "Bash(*env*> *)",
       "Bash(node -e*)",
       "Bash(node --eval*)",
       "Bash(python3 -c*)",
-      "Bash(python -c*)"
+      "Bash(python -c*)",
+      "Bash(git add *)",
+      "Bash(git commit*)"
     ]
   },
   "hooks": {

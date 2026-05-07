@@ -2,6 +2,7 @@
 name: delegate
 description: 実装計画を作成し、承認後にステップコミットで自動実行する。確認なしで最後まで進む委任モード。
 argument-hint: [実装内容]
+allowed-tools: Read, Grep, Glob, Edit, Write, Bash
 model: inherit
 ---
 

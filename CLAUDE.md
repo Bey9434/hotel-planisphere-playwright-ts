@@ -20,15 +20,15 @@
 - `pnpm test:ui` — Playwright UI モードで実行
 - `pnpm lint` / `pnpm lint:fix` — ESLint チェック / 自動修正
 - `pnpm format` / `pnpm format:check` — Prettier フォーマット / チェック
-- `npx playwright test --repeat-each=3` — テスト安定性確認
-- `npx playwright test --project=chromium` — 単一ブラウザ実行
+- `pnpm exec playwright test --repeat-each=3` — テスト安定性確認
+- `pnpm exec playwright test --project=chromium` — 単一ブラウザ実行
 
 ## ディレクトリ
 
 - `pages/` — Functional POM（クラス不使用、関数エクスポート、`Readonly<Page>` パラメータ）
 - `tests/` — テストシナリオ (`*.spec.ts`)
 - `config/` — 環境設定・テストデータ（`process.env` 経由）
-- `.agent/` — Antigravity IDE 用エージェント設定（**変更禁止**）
+- `.agent/` — Antigravity IDE 用エージェント設定（**原則変更禁止だが、追加、修正に限り許可**）
 
 ## 絶対禁止
 
@@ -44,3 +44,5 @@
 - 提案時は 3 案提示し、メリット・デメリットを明示（例外: バグ修正、フォーマット指定の生成タスク）
 - 公式ドキュメントの URL・根拠を必ず提示
 - 思考過程を明示
+- 質問や相談に対して先走って実装しない（調査・提案にとどめる）
+- 明示的に実装を指示された場合は完了まで自動実行する

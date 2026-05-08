@@ -2,6 +2,7 @@
 name: hypothesis
 description: 複数の実装アプローチを Agent Teams で並列実行し、結果を比較する。
 argument-hint: [比較したいテーマ]
+allowed-tools: Read, Grep, Glob, Edit, Write, Bash, Agent
 model: inherit
 ---
 

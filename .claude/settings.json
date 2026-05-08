@@ -26,6 +26,11 @@
     "ask": ["Bash(git push *)"],
     "deny": [
       "Bash(rm -rf *)",
+      "Bash(rm -r *)",
+      "Bash(rm -R *)",
+      "Bash(rm -fr *)",
+      "Bash(rm -fR *)",
+      "Bash(rm --recursive *)",
       "Read(.env.keys)",
       "Bash(*cat*.env.keys*)",
       "Bash(*less*.env.keys*)",

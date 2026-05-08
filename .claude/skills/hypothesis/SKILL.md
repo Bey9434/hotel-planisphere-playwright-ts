@@ -11,11 +11,32 @@ model: inherit
 
 ## 前提条件
 
-Agent Teams（実験的機能）を使用する。有効化されていない場合はユーザーに以下を案内する：
+Agent Teams（実験的機能）を使用する。有効化されていない場合はユーザーに以下を案内し、**フォールバックモードで順次実行する**：
 
 ```bash
 CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
 ```
+
+### フォールバックモード（Agent Teams が無効な場合）
+
+Agent Teams が使えない環境では、**仮説ごとにブランチを作成して順次実装**する：
+
+```
+現在のブランチ (例: feat/xxx)
+  ├── hypothesis/a  ← 仮説 A を実装・コミット
+  └── hypothesis/b  ← 仮説 B を実装・コミット
+```
+
+#### 手順
+
+1. 現在のブランチ名を記録する
+2. `git checkout -b hypothesis/a` で仮説 A 用ブランチを作成する
+3. 仮説 A を実装・コミットし、lint・テスト結果を記録する
+4. 元のブランチに戻り `git checkout -b hypothesis/b` で仮説 B 用ブランチを作成する
+5. 仮説 B を実装・コミットし、lint・テスト結果を記録する
+6. `git diff hypothesis/a hypothesis/b` で差分を比較して Phase 3 のレポートを作成する
+7. ユーザーが選択した仮説を元のブランチにマージする
+8. 不採用のブランチを `git branch -d` で削除する
 
 ## Phase 1: 仮説の設計
 

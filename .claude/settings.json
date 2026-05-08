@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
     "allow": [
       "Bash(npx playwright test*)",
@@ -10,14 +11,19 @@
       "Bash(gh pr list*)",
       "Bash(gh pr status*)",
       "Bash(gh pr checks*)",
+      "Bash(gh pr diff*)",
       "Bash(gh issue view*)",
       "Bash(gh issue list*)",
       "Bash(git diff*)",
       "Bash(git log*)",
       "Bash(git status*)",
       "Bash(git branch*)",
-      "Bash(ls *)"
+      "Bash(ls *)",
+      "Bash(git add *)",
+      "Bash(git commit -m *)",
+      "Bash(rm *)"
     ],
+    "ask": ["Bash(git push *)"],
     "deny": [
       "Bash(rm -rf *)",
       "Read(.env.keys)",
@@ -43,9 +49,7 @@
       "Bash(node -e*)",
       "Bash(node --eval*)",
       "Bash(python3 -c*)",
-      "Bash(python -c*)",
-      "Bash(git add *)",
-      "Bash(git commit*)"
+      "Bash(python -c*)"
     ]
   },
   "hooks": {
@@ -56,6 +60,11 @@
           {
             "type": "command",
             "command": "file_path=$(cat - | jq -r '.tool_input.file_path // empty'); if [ -n \"$file_path\" ] && echo \"$file_path\" | grep -qE '\\.(ts|js|json)$'; then pnpm exec prettier --write \"$file_path\" || true; fi",
+            "timeout": 15000
+          },
+          {
+            "type": "command",
+            "command": "file_path=$(cat - | jq -r '.tool_input.file_path // empty'); if [ -n \"$file_path\" ] && echo \"$file_path\" | grep -qE '\\.(ts|js)$'; then pnpm exec eslint \"$file_path\" --fix --quiet 2>/dev/null || true; fi",
             "timeout": 15000
           }
         ]

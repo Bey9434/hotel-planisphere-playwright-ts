@@ -19,6 +19,7 @@
       "Bash(git status*)",
       "Bash(git branch*)",
       "Bash(ls *)",
+      "Bash(git ls-files *)",
       "Bash(git add *)",
       "Bash(git checkout *)",
       "Bash(git merge *)",

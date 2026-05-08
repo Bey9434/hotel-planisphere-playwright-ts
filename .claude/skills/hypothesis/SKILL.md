@@ -21,7 +21,7 @@ CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
 
 Agent Teams が使えない環境では、**仮説ごとにブランチを作成して順次実装**する：
 
-```
+```text
 現在のブランチ (例: feat/xxx)
   ├── hypothesis/a  ← 仮説 A を実装・コミット
   └── hypothesis/b  ← 仮説 B を実装・コミット

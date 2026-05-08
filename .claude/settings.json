@@ -20,6 +20,8 @@
       "Bash(git branch*)",
       "Bash(ls *)",
       "Bash(git add *)",
+      "Bash(git checkout *)",
+      "Bash(git merge *)",
       "Bash(git commit -m *)",
       "Bash(rm *)"
     ],
@@ -31,6 +33,7 @@
       "Bash(rm -fr *)",
       "Bash(rm -fR *)",
       "Bash(rm --recursive *)",
+      "Bash(*git add*.env.keys*)",
       "Read(.env.keys)",
       "Bash(*cat*.env.keys*)",
       "Bash(*less*.env.keys*)",

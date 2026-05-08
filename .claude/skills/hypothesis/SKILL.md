@@ -34,9 +34,10 @@ Agent Teams が使えない環境では、**仮説ごとにブランチを作成
 3. 仮説 A を実装・コミットし、lint・テスト結果を記録する
 4. 元のブランチに戻り `git checkout -b hypothesis/b` で仮説 B 用ブランチを作成する
 5. 仮説 B を実装・コミットし、lint・テスト結果を記録する
-6. `git diff hypothesis/a hypothesis/b` で差分を比較して Phase 3 のレポートを作成する
-7. ユーザーが選択した仮説を元のブランチにマージする
-8. 不採用のブランチを `git branch -d` で削除する
+6. 元のブランチに戻る（`git checkout <元のブランチ名>`）
+7. `git diff hypothesis/a hypothesis/b` で差分を比較して Phase 3 のレポートを作成する
+8. ユーザーが選択した仮説を元のブランチにマージする（`git merge hypothesis/<選択>`）
+9. 不採用のブランチを `git branch -d` で削除する
 
 ## Phase 1: 仮説の設計
 

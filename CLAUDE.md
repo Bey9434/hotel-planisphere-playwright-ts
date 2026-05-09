@@ -28,7 +28,7 @@
 - `pages/` — Functional POM（クラス不使用、関数エクスポート、`Readonly<Page>` パラメータ）
 - `tests/` — テストシナリオ (`*.spec.ts`)
 - `config/` — 環境設定・テストデータ（`process.env` 経由）
-- `.agent/` — Antigravity IDE 用エージェント設定（**原則変更禁止だが、追加、修正に限り許可**）
+- `.agent/` — Antigravity IDE 用エージェント設定（**削除禁止。追加・修正は許可**）
 
 ## 絶対禁止
 

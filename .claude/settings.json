@@ -21,10 +21,13 @@
       "Bash(ls *)",
       "Bash(git ls-files *)",
       "Bash(git add *)",
-      "Bash(git checkout *)",
+      "Bash(git checkout -b *)",
+      "Bash(git switch *)",
       "Bash(git merge *)",
       "Bash(git commit -m *)",
-      "Bash(rm *)"
+      "Bash(git branch -D hypothesis/*)",
+      "Bash(rm test-results/*)",
+      "Bash(rm playwright-report/*)"
     ],
     "deny": [
       "Bash(rm -rf *)",
@@ -59,7 +62,7 @@
       "Bash(python3 -c*)",
       "Bash(python -c*)"
     ],
-    "ask": ["Bash(git push *)"]
+    "ask": ["Bash(git push *)", "Bash(git checkout *)"]
   },
   "hooks": {
     "PostToolUse": [

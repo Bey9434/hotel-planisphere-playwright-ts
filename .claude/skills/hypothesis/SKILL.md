@@ -38,7 +38,9 @@ Agent Teams が使えない環境では、**仮説ごとにブランチを作成
 6. 元のブランチに戻る（`git checkout <元のブランチ名>`）
 7. `git diff hypothesis/a hypothesis/b` で差分を比較して Phase 3 のレポートを作成する
 8. ユーザーが選択した仮説を元のブランチにマージする（`git merge hypothesis/<選択>`）
-9. 不採用のブランチを `git branch -D` で削除する（未マージコミットが残るため `-D` で強制削除）
+9. 不採用のブランチを削除する（`hypothesis/*` ブランチは未マージコミットが残るため `-D` で強制削除が必要）
+   - 削除前に `git log hypothesis/<不採用>` で内容を確認する
+   - `git branch -D hypothesis/<不採用>` で削除する（`hypothesis/*` パターンのみ許可済み）
 
 ## Phase 1: 仮説の設計
 

@@ -56,15 +56,15 @@ model: inherit
 
 ```bash
 # 単一実行
-npx playwright test tests/<ファイル名>.spec.ts
+pnpm exec playwright test tests/<ファイル名>.spec.ts
 
 # 特定ブラウザで実行
-npx playwright test tests/<ファイル名>.spec.ts --project=chromium
-npx playwright test tests/<ファイル名>.spec.ts --project=firefox
-npx playwright test tests/<ファイル名>.spec.ts --project=webkit
+pnpm exec playwright test tests/<ファイル名>.spec.ts --project=chromium
+pnpm exec playwright test tests/<ファイル名>.spec.ts --project=firefox
+pnpm exec playwright test tests/<ファイル名>.spec.ts --project=webkit
 
 # 安定性確認（3回以上繰り返し）
-npx playwright test tests/<ファイル名>.spec.ts --repeat-each=3
+pnpm exec playwright test tests/<ファイル名>.spec.ts --repeat-each=3
 ```
 
 ### テスト種別ごとの注意
@@ -78,7 +78,7 @@ npx playwright test tests/<ファイル名>.spec.ts --repeat-each=3
 テストが失敗した場合、以下の順序で対応する：
 
 1. **エラーログを読む** — エラーメッセージを正確に把握
-2. **トレース/スクリーンショットを確認** — `npx playwright show-trace` で視覚的に確認
+2. **トレース/スクリーンショットを確認** — `pnpm exec playwright show-trace` で視覚的に確認
 3. **ロケーター/タイミングの問題を修正** — 盲目的にリトライしない
 
 フレーキーテストが解消できない場合：

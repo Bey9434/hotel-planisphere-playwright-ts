@@ -111,7 +111,7 @@ gh pr diff $ARGUMENTS
 ### Phase 3 — バリデーション
 
 ```bash
-npx tsc --noEmit
+pnpm exec tsc --noEmit
 pnpm lint
 pnpm test
 ```

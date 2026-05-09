@@ -73,7 +73,7 @@
           },
           {
             "type": "command",
-            "command": "file_path=$(cat - | jq -r '.tool_input.file_path // empty'); if [ -n \"$file_path\" ] && echo \"$file_path\" | grep -qE '\\.(ts|js)$'; then pnpm exec eslint \"$file_path\" --fix --quiet 2>/dev/null || true; fi",
+            "command": "file_path=$(cat - | jq -r '.tool_input.file_path // empty'); if [ -n \"$file_path\" ] && echo \"$file_path\" | grep -qE '\\.(ts|js)$'; then pnpm exec eslint \"$file_path\" --fix --quiet || true; fi",
             "timeout": 15000
           }
         ]

@@ -37,7 +37,7 @@ model: inherit
 
 準拠ルール：
 
-- `rules/e2e-runner.md` の Functional POM パターンに従う（クラスではなく関数）
+- `.agent/rules/e2e-runner.md` の Functional POM パターンに従う（クラスではなく関数）
 - ロケーター優先順位: `getByRole` > `getByLabel` > `getByPlaceholder` > `getByTestId` > `getByText`
 - ロケーター単体を返す関数も個別に export する
 
@@ -69,7 +69,7 @@ pnpm exec playwright test tests/<ファイル名>.spec.ts --repeat-each=3
 
 ### テスト種別ごとの注意
 
-- **E2E テスト**: 全ブラウザで実行
+- **E2E テスト**（`vrt.spec.ts` を除く）: 全ブラウザで実行
 - **アクセシビリティテスト**: `AxeBuilder` + WCAG 2.1 AA。既知の SUT 側問題は `disableRules()` で除外可
 - **VRT**: Chromium のみ（`toHaveScreenshot()` + `maxDiffPixelRatio: 0.01`）
 

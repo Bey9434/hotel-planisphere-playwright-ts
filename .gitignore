@@ -1,11 +1,6 @@
 # Documentation (Internal use only - interview prep)
 docs/
 
-# AI Development Tools (Internal use only)
-.agent/rules/glossary.md
-.agent/skills/glossary/SKILL.md
-.agent/workflows/add-glossary.md
-
 # Playwright
 /blob-report/
 /playwright-report/
@@ -16,3 +11,6 @@ node_modules/
 
 # Environment variables
 .env.keys
+
+# Claude Code (personal settings)
+.claude/settings.local.json

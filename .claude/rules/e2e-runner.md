@@ -1,0 +1,1 @@
+../../.agent/rules/e2e-runner.md

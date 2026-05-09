@@ -26,7 +26,6 @@
       "Bash(git commit -m *)",
       "Bash(rm *)"
     ],
-    "ask": ["Bash(git push *)"],
     "deny": [
       "Bash(rm -rf *)",
       "Bash(rm -r *)",
@@ -59,7 +58,8 @@
       "Bash(node --eval*)",
       "Bash(python3 -c*)",
       "Bash(python -c*)"
-    ]
+    ],
+    "ask": ["Bash(git push *)"]
   },
   "hooks": {
     "PostToolUse": [
@@ -79,5 +79,10 @@
         ]
       }
     ]
+  },
+  "enabledPlugins": {
+    "commit-commands@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "pr-review-toolkit@claude-plugins-official": true
   }
 }

@@ -71,9 +71,9 @@ git ls-files --others --exclude-standard | grep -E '(\.spec\.ts|pages/)'
 
 検出事項を以下の形式で出力：
 
-- **重要度**: HIGH / MEDIUM
+- **重要度**: CRITICAL / HIGH / MEDIUM
 - **ファイル位置と行番号**
 - **問題の説明**
 - **修正案**（コード例付き）
 
-HIGH の問題がある場合はコミット前の修正を推奨する。
+CRITICAL または HIGH の問題がある場合はコミット前の修正を推奨する。

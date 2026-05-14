@@ -8,4 +8,5 @@ export const PATHS = {
   PLANS: "plans.html",
   MY_PAGE: "mypage.html",
   SIGNUP: "signup.html",
+  RESERVE: "reserve.html",
 } as const;

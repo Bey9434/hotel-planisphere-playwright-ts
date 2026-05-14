@@ -32,13 +32,17 @@ model: inherit
 
 ## Phase 2: Page Object の確認・作成
 
-`pages/` 配下の既存 Page Object を確認し、必要に応じて新規作成する。
+`pages/` 配下の既存 Page Object を**必ず読んでパターンを把握してから**実装に入る。
 
 準拠ルール：
 
 - `.agent/rules/e2e-runner.md` の Functional POM パターンに従う（クラスではなく関数）
 - ロケーター優先順位: `getByRole` > `getByLabel` > `getByPlaceholder` > `getByTestId` > `getByText`
 - ロケーター単体を返す関数も個別に export する
+- **Page Object 内に文字列リテラルを直書きしない** — ラベル名・ボタン名・エラーメッセージ・見出し・テストデータは定数ファイルで一元管理してインポートする
+- **エラーメッセージもロケーター関数として Page Object に持たせる** — エラー表示要素を返す関数を Page Object に export する
+- **認証情報は `config/` から取得する** — ユーザーのメール・パスワードを spec 内にハードコードしない
+- **テストデータ（ダミー氏名・メール・電話番号等）も定数化する** — spec 内に直書きしない
 
 ## Phase 3: テスト実装
 

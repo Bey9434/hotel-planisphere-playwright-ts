@@ -3,7 +3,6 @@ name: e2e-runner
 description: Playwright E2Eテストの作成・実行・デバッグ。新規テスト実装、失敗調査、フレーキー解消に使用。
 argument-hint: [テスト対象の機能名]
 allowed-tools: Read, Grep, Glob, Bash, Edit, Write
-paths: "tests/**/*.ts,pages/**/*.ts"
 model: inherit
 ---
 

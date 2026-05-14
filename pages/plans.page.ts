@@ -11,3 +11,7 @@ export const navigateToPlans = (page: Readonly<Page>): Promise<unknown> =>
 
 export const getPlanHeading = (page: Readonly<Page>, planName: string) =>
   page.getByRole("heading", { name: planName });
+
+// プランカード全体の見出し一覧を返す（件数検証用）
+export const getAllPlanHeadings = (page: Readonly<Page>) =>
+  page.getByRole("heading", { level: 5 });

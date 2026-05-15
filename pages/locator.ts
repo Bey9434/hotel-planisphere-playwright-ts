@@ -17,7 +17,7 @@ export const PLAN_DINNER = "ディナー付きプラン" as const;
 export const PLAN_OTOKU = "お得なプラン" as const;
 export const PLAN_PREMIUM = "プレミアムプラン" as const;
 
-// フォームラベル（ログイン）
+// フォームラベル（ログイン・予約共通）
 export const LABEL_EMAIL = "メールアドレス" as const;
 export const LABEL_PASSWORD = "パスワード" as const;
 
@@ -51,8 +51,3 @@ export const ERROR_DATE_PAST = "翌日以降の日付を入力してください
 export const ERROR_DATE_MAX = "3ヶ月以内の日付を入力してください。" as const;
 // ブラウザが "{min}以上の値を入力してください。" の形式で生成するため正規表現で照合
 export const ERROR_MIN_VALUE = /以上の値を入力してください。/;
-
-// 予約テストデータ
-export const TEST_RESERVATION_NAME = "テスト太郎" as const;
-export const TEST_RESERVATION_EMAIL = "test@example.com" as const;
-export const TEST_RESERVATION_TEL = "09012345678" as const;

@@ -29,7 +29,7 @@ import {
   TEST_RESERVATION_NAME,
   TEST_RESERVATION_EMAIL,
   TEST_RESERVATION_TEL,
-} from "../pages/locator";
+} from "../config/test-data";
 
 // 日付を YYYY/MM/DD 形式にフォーマット（datepicker の期待フォーマット）
 const formatDate = (date: Date): string => {
@@ -85,24 +85,31 @@ test.describe("宿泊予約", () => {
       page,
     }) => {
       // Arrange
+      // fillDate は他フィールド操作後に JS が日付を再セットするため最後に入力する
       const tomorrow = formatDate(addDays(new Date(), 1));
       await navigateToReservation(page);
-      await fillDate(page, tomorrow);
       await fillTerm(page, 1);
       await fillHeadCount(page, 1);
+      await fillDate(page, tomorrow);
 
       // Act: オプションなしの合計を取得
       const baseText = await getTotalBill(page).textContent();
       const base = parseInt((baseText ?? "0").replace(/[^\d]/g, ""), 10);
+      // 基準金額が正しく取得できていること（プランの基本料金が0円にならないことを確認）
+      expect(base).toBeGreaterThan(0);
 
       // オプションを1つチェック（1人 × 1,000円）
       await getBreakfastCheckbox(page).check();
+      // check() 後に JS が合計金額を非同期で更新するため、変化を待ってから読む
+      await expect(getTotalBill(page)).not.toHaveText(baseText ?? "");
       const withOneText = await getTotalBill(page).textContent();
       const withOne = parseInt((withOneText ?? "0").replace(/[^\d]/g, ""), 10);
 
       // 3つすべてチェック（1人 × 3,000円）
       await getEarlyCheckInCheckbox(page).check();
       await getSightseeingCheckbox(page).check();
+      // 同様に非同期更新を待機
+      await expect(getTotalBill(page)).not.toHaveText(withOneText ?? "");
       const withAllText = await getTotalBill(page).textContent();
       const withAll = parseInt((withAllText ?? "0").replace(/[^\d]/g, ""), 10);
 
@@ -124,6 +131,7 @@ test.describe("宿泊予約", () => {
 
       // Assert
       await expect(page).toHaveURL(/confirm\.html/);
+      await expect(getConfirmHeading(page)).toBeVisible();
     });
 
     test("確認のご連絡で「メールでのご連絡」を選択し、メールアドレスを入力して予約できること", async ({
@@ -133,17 +141,18 @@ test.describe("宿泊予約", () => {
       const tomorrow = formatDate(addDays(new Date(), 1));
       await navigateToReservation(page);
 
-      // Act
-      await fillDate(page, tomorrow);
+      // Act: fillDate は JS による日付再セットを避けるため最後に入力する
       await fillTerm(page, 1);
       await fillHeadCount(page, 1);
       await fillUsername(page, TEST_RESERVATION_NAME);
       await selectContact(page, "email");
       await fillEmail(page, TEST_RESERVATION_EMAIL);
+      await fillDate(page, tomorrow);
       await submitForm(page);
 
       // Assert
       await expect(page).toHaveURL(/confirm\.html/);
+      await expect(getConfirmHeading(page)).toBeVisible();
     });
 
     test("確認のご連絡で「電話でのご連絡」を選択し、電話番号を入力して予約できること", async ({
@@ -153,17 +162,18 @@ test.describe("宿泊予約", () => {
       const tomorrow = formatDate(addDays(new Date(), 1));
       await navigateToReservation(page);
 
-      // Act
-      await fillDate(page, tomorrow);
+      // Act: fillDate は JS による日付再セットを避けるため最後に入力する
       await fillTerm(page, 1);
       await fillHeadCount(page, 1);
       await fillUsername(page, TEST_RESERVATION_NAME);
       await selectContact(page, "tel");
       await fillTel(page, TEST_RESERVATION_TEL);
+      await fillDate(page, tomorrow);
       await submitForm(page);
 
       // Assert
       await expect(page).toHaveURL(/confirm\.html/);
+      await expect(getConfirmHeading(page)).toBeVisible();
     });
 
     test("宿泊予約完了後に、アニメーション付きダイアログが表示されること", async ({
@@ -318,8 +328,10 @@ test.describe("宿泊予約", () => {
       page,
     }) => {
       // Arrange
-      const tomorrow = formatDate(addDays(new Date(), 1));
-      const today = formatDate(new Date());
+      // new Date() を1回だけ取得し、深夜0時付近での日付ズレによるフレーキーを防ぐ
+      const now = new Date();
+      const tomorrow = formatDate(addDays(now, 1));
+      const today = formatDate(now);
       await navigateToReservation(page);
       await fillBasicReservation(page, tomorrow);
 
@@ -343,6 +355,7 @@ test.describe("宿泊予約", () => {
 
       // Assert
       await expect(page).toHaveURL(/confirm\.html/);
+      await expect(getConfirmHeading(page)).toBeVisible();
     });
 
     test("宿泊日に3ヶ月後（90日後）の日付を入力して予約できること", async ({
@@ -358,6 +371,7 @@ test.describe("宿泊予約", () => {
 
       // Assert
       await expect(page).toHaveURL(/confirm\.html/);
+      await expect(getConfirmHeading(page)).toBeVisible();
     });
 
     test("宿泊日に3ヶ月後+1日（91日後）の日付を入力するとエラーが表示されること", async ({
@@ -366,13 +380,9 @@ test.describe("宿泊予約", () => {
       // Arrange: maxDate:90 より、91日後は範囲外
       const ninetyOneDaysLater = formatDate(addDays(new Date(), 91));
       await navigateToReservation(page);
-      await fillTerm(page, 1);
-      await fillHeadCount(page, 1);
-      await fillUsername(page, TEST_RESERVATION_NAME);
-      await selectContact(page, "no");
 
-      // Act
-      await fillDate(page, ninetyOneDaysLater);
+      // Act: fillBasicReservation で基本情報を入力（日付は最後にセット）
+      await fillBasicReservation(page, ninetyOneDaysLater);
       await getSubmitButton(page).click();
 
       // Assert
@@ -382,16 +392,16 @@ test.describe("宿泊予約", () => {
     test("宿泊数を0泊にするとエラーが表示されること（最小有効値1の隣）", async ({
       page,
     }) => {
-      // Arrange
+      // Arrange: fillDate は JS による日付再セットを避けるため最後に入力する
       const tomorrow = formatDate(addDays(new Date(), 1));
       await navigateToReservation(page);
-      await fillDate(page, tomorrow);
       await fillHeadCount(page, 1);
       await fillUsername(page, TEST_RESERVATION_NAME);
       await selectContact(page, "no");
 
       // Act
       await fillTerm(page, 0);
+      await fillDate(page, tomorrow);
       await getSubmitButton(page).click();
 
       // Assert
@@ -409,21 +419,22 @@ test.describe("宿泊予約", () => {
 
       // Assert
       await expect(page).toHaveURL(/confirm\.html/);
+      await expect(getConfirmHeading(page)).toBeVisible();
     });
 
     test("人数を0名にするとエラーが表示されること（最小有効値1の隣）", async ({
       page,
     }) => {
-      // Arrange
+      // Arrange: fillDate は JS による日付再セットを避けるため最後に入力する
       const tomorrow = formatDate(addDays(new Date(), 1));
       await navigateToReservation(page);
-      await fillDate(page, tomorrow);
       await fillTerm(page, 1);
       await fillUsername(page, TEST_RESERVATION_NAME);
       await selectContact(page, "no");
 
       // Act
       await fillHeadCount(page, 0);
+      await fillDate(page, tomorrow);
       await getSubmitButton(page).click();
 
       // Assert
@@ -441,6 +452,7 @@ test.describe("宿泊予約", () => {
 
       // Assert
       await expect(page).toHaveURL(/confirm\.html/);
+      await expect(getConfirmHeading(page)).toBeVisible();
     });
   });
 });

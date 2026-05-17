@@ -92,30 +92,23 @@ test.describe("宿泊予約", () => {
       await fillHeadCount(page, 1);
       await fillDate(page, tomorrow);
 
-      // Act: オプションなしの合計を取得
+      // Act & Assert: 基準金額を取得し、オプション追加ごとに期待値を Web-First Assertion で検証
       const baseText = await getTotalBill(page).textContent();
       const base = parseInt((baseText ?? "0").replace(/[^\d]/g, ""), 10);
-      // 基準金額が正しく取得できていること（プランの基本料金が0円にならないことを確認）
       expect(base).toBeGreaterThan(0);
 
-      // オプションを1つチェック（1人 × 1,000円）
+      // オプション1つ（朝食: +1,000円）
       await getBreakfastCheckbox(page).check();
-      // check() 後に JS が合計金額を非同期で更新するため、変化を待ってから読む
-      await expect(getTotalBill(page)).not.toHaveText(baseText ?? "");
-      const withOneText = await getTotalBill(page).textContent();
-      const withOne = parseInt((withOneText ?? "0").replace(/[^\d]/g, ""), 10);
+      await expect(getTotalBill(page)).toContainText(
+        (base + 1000).toLocaleString(),
+      );
 
-      // 3つすべてチェック（1人 × 3,000円）
+      // オプション3つ（朝食 + 昼チェックイン + 観光: +3,000円）
       await getEarlyCheckInCheckbox(page).check();
       await getSightseeingCheckbox(page).check();
-      // 同様に非同期更新を待機
-      await expect(getTotalBill(page)).not.toHaveText(withOneText ?? "");
-      const withAllText = await getTotalBill(page).textContent();
-      const withAll = parseInt((withAllText ?? "0").replace(/[^\d]/g, ""), 10);
-
-      // Assert: オプション1つで+1,000円、3つで+3,000円
-      expect(withOne - base).toBe(1000);
-      expect(withAll - base).toBe(3000);
+      await expect(getTotalBill(page)).toContainText(
+        (base + 3000).toLocaleString(),
+      );
     });
 
     test("確認のご連絡で「希望しない」を選択して予約できること", async ({

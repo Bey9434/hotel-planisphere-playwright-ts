@@ -99,15 +99,15 @@ test.describe("宿泊予約", () => {
 
       // オプション1つ（朝食: +1,000円）
       await getBreakfastCheckbox(page).check();
-      await expect(getTotalBill(page)).toContainText(
-        (base + 1000).toLocaleString(),
+      await expect(getTotalBill(page)).toHaveText(
+        `${(base + 1000).toLocaleString("ja-JP")}円`,
       );
 
       // オプション3つ（朝食 + 昼チェックイン + 観光: +3,000円）
       await getEarlyCheckInCheckbox(page).check();
       await getSightseeingCheckbox(page).check();
-      await expect(getTotalBill(page)).toContainText(
-        (base + 3000).toLocaleString(),
+      await expect(getTotalBill(page)).toHaveText(
+        `${(base + 3000).toLocaleString("ja-JP")}円`,
       );
     });
 

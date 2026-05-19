@@ -224,13 +224,13 @@ test.describe("宿泊予約", () => {
     test("氏名を未入力で送信するとエラーメッセージが表示されること", async ({
       page,
     }) => {
-      // Arrange: 氏名以外を入力
+      // Arrange: 氏名以外を入力（fillDate は JS による日付再セットを避けるため最後に入力する）
       const tomorrow = formatDate(addDays(new Date(), 1));
       await navigateToReservation(page);
-      await fillDate(page, tomorrow);
       await fillTerm(page, 1);
       await fillHeadCount(page, 1);
       await selectContact(page, "no");
+      await fillDate(page, tomorrow);
 
       // Act: 氏名は空のまま送信を試みる
       await getSubmitButton(page).click();
@@ -242,14 +242,14 @@ test.describe("宿泊予約", () => {
     test("確認のご連絡で「メールでのご連絡」を選択し、メールアドレス未入力で送信するとエラーが表示されること", async ({
       page,
     }) => {
-      // Arrange
+      // Arrange（fillDate は JS による日付再セットを避けるため最後に入力する）
       const tomorrow = formatDate(addDays(new Date(), 1));
       await navigateToReservation(page);
-      await fillDate(page, tomorrow);
       await fillTerm(page, 1);
       await fillHeadCount(page, 1);
       await fillUsername(page, TEST_RESERVATION_NAME);
       await selectContact(page, "email");
+      await fillDate(page, tomorrow);
 
       // Act: メールアドレスは空のまま送信
       await getSubmitButton(page).click();
@@ -261,14 +261,14 @@ test.describe("宿泊予約", () => {
     test("確認のご連絡で「電話でのご連絡」を選択し、電話番号未入力で送信するとエラーが表示されること", async ({
       page,
     }) => {
-      // Arrange
+      // Arrange（fillDate は JS による日付再セットを避けるため最後に入力する）
       const tomorrow = formatDate(addDays(new Date(), 1));
       await navigateToReservation(page);
-      await fillDate(page, tomorrow);
       await fillTerm(page, 1);
       await fillHeadCount(page, 1);
       await fillUsername(page, TEST_RESERVATION_NAME);
       await selectContact(page, "tel");
+      await fillDate(page, tomorrow);
 
       // Act: 電話番号は空のまま送信
       await getSubmitButton(page).click();
@@ -283,13 +283,13 @@ test.describe("宿泊予約", () => {
       // Arrange
       const tomorrow = formatDate(addDays(new Date(), 1));
       await navigateToReservation(page);
-      await fillDate(page, tomorrow);
       await fillHeadCount(page, 1);
       await fillUsername(page, TEST_RESERVATION_NAME);
       await selectContact(page, "no");
 
-      // Act
+      // Act: fillDate は fillTerm の後に入力して JS による日付再セットを回避する
       await fillTerm(page, -1);
+      await fillDate(page, tomorrow);
       await getSubmitButton(page).click();
 
       // Assert
@@ -302,13 +302,13 @@ test.describe("宿泊予約", () => {
       // Arrange
       const tomorrow = formatDate(addDays(new Date(), 1));
       await navigateToReservation(page);
-      await fillDate(page, tomorrow);
       await fillTerm(page, 1);
       await fillUsername(page, TEST_RESERVATION_NAME);
       await selectContact(page, "no");
 
-      // Act
+      // Act: fillDate は fillHeadCount の後に入力して JS による日付再セットを回避する
       await fillHeadCount(page, -1);
+      await fillDate(page, tomorrow);
       await getSubmitButton(page).click();
 
       // Assert

@@ -49,18 +49,15 @@ export const getSubmitButton = (page: Readonly<Page>) =>
   page.getByRole("button", { name: BUTTON_SUBMIT_RESERVATION });
 
 // アクション
-// TODO(human): 以下の3関数を修正してください
-// fillDate   → triple-click の後に Control+a を追加（webkit の選択漏れ対策）
-// fillTerm   → triple-click で既存値をクリアしてから fill する
-// fillHeadCount → fillTerm と同じパターンで修正する
 export const fillDate = async (
   page: Readonly<Page>,
   date: string,
 ): Promise<void> => {
   // triple-click で既存値を全選択してから上書き（JSによる事前入力に対応）
   // fill() では datepicker の change イベントが発火しないため pressSequentially を使用
+  // ControlOrMeta+a: macOS WebKit では Control+a がカーソル行頭移動になるため Meta+a（Command+A）が必要
   await getDateInput(page).click({ clickCount: 3 });
-  await getDateInput(page).press("Control+a");
+  await getDateInput(page).press("ControlOrMeta+a");
   await getDateInput(page).pressSequentially(date);
   await getDateInput(page).press("Tab");
 };

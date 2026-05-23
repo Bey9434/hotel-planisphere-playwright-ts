@@ -21,6 +21,9 @@ export default defineConfig({
     /* Base URL to use in actions like `await page.goto('')`. */
     baseURL: "https://hotel-example-site.takeyaqa.dev/ja/",
 
+    /* ブラウザのネイティブ constraint validation メッセージを日本語にする（CI ubuntu-latest 対応） */
+    locale: "ja-JP",
+
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
 

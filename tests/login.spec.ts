@@ -10,6 +10,7 @@ import {
   loginWithCredentials,
 } from "../pages/login.page";
 import { GENERAL_USER } from "../config/credentials";
+import { ERROR_REQUIRED_FIELD } from "../pages/locator";
 
 test.describe("ログイン機能", () => {
   test("タイトルが表示されるか", async ({ page }) => {
@@ -30,12 +31,10 @@ test.describe("ログイン機能", () => {
   }) => {
     await navigateToLogin(page);
     await getSubmitButton(page).click();
-    await expect(getEmailErrorMessage(page)).toHaveText(
-      "このフィールドを入力してください。",
-    );
+    await expect(getEmailErrorMessage(page)).toHaveText(ERROR_REQUIRED_FIELD);
     await expect(getPasswordInput(page)).toBeVisible();
     await expect(getPasswordErrorMessage(page)).toHaveText(
-      "このフィールドを入力してください。",
+      ERROR_REQUIRED_FIELD,
     );
   });
 

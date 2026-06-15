@@ -24,7 +24,7 @@
 
 ### Visual Regression Testing（VRT）
 
-Playwright 標準の `toHaveScreenshot` を使用し、**トップページ / プラン一覧 / ログインページ** の見た目が変わっていないことを 3 ブラウザ × 3 ページ = **9 パターン** で検証します。
+Playwright 標準の `toHaveScreenshot` を使用し、**トップページ / プラン一覧 / ログインページ** の見た目が変わっていないことを検証します。VRT は意図的に **Chromium のみ**で実行しています。Firefox / WebKit はフォントレンダリングの差分によるノイズが多く、ベースライン維持コストが検出価値に見合わないと判断したためです（`playwright.config.ts` で両ブラウザの VRT を `testIgnore` で除外）。
 
 ### アクセシビリティテスト
 
@@ -167,4 +167,4 @@ GitHub Actions により、`main` / `master` ブランチへの Push および P
 - **マトリックス実行と並列化**: Chromium / Firefox / Webkit のテストを GitHub Actions の Matrix Strategy で並列（パラレル）に実行し、CI の実行時間を大幅に短縮しています。
 - **レポートのマージとデプロイ**: 各ブラウザごとの `blob` レポートを 1 つの HTML レポートに自動マージ（`merge-reports`）し、`main` ブランチへのマージ完了時は自動的に GitHub Pages へテストレポートがデプロイ・公開されます。
 - **環境変数（クレデンシャル管理）**: `dotenvx` と GitHub Secrets を連携させ、セキュアにテスト用のアカウント情報を復号してテストを実行します。
-- **定期的な依存関係のアップデート**: Dependabot の `multi-ecosystem-groups` を導入し、Playwright の npm パッケージ（`@playwright/test`）と GitHub Actions のコンテナイメージ（Playwright 公式 Docker）のアップデートを必ず 1 つの Pull Request にまとめます。これにより、npm パッケージと Docker イメージのバージョン不一致による CI 環境の依存関係エラーを防止しています。
+- **定期的な依存関係のアップデート**: Dependabot で npm パッケージと GitHub Actions を週次で監視し、それぞれグルーピングして PR を最小化しています。さらに CI の `setup` ジョブで `package.json` の `@playwright/test` のバージョンを抽出し、テスト実行用の Playwright 公式 Docker イメージのタグを動的に組み立てています。これにより、npm パッケージとブラウザバイナリ（Docker イメージ）のバージョン不一致による CI エラーを構造的に防止しています。

@@ -2,7 +2,7 @@
 name: glossary
 description: >
   WHEN: User asks "〇〇について教えて" or "〇〇を用語集に追加して" for technical terminology.
-  WHAT: Search for official documentation, generate technical interview-level explanations,
+  WHAT: Search for official documentation, generate practical in-depth technical explanations,
   and append to docs/glossary.md with structured format (purpose, comparison, Q&A).
   WHEN NOT: For non-technical questions or general conversation.
 ---
@@ -11,7 +11,7 @@ description: >
 
 ## 役割
 
-ユーザーが質問した技術用語について、技術面接に耐えられるレベルで論理的な解説を生成し、`docs/glossary.md` に追記する。
+ユーザーが質問した技術用語について、実務レベルで通用する論理的な解説を生成し、`docs/glossary.md` に追記する。
 
 ## トリガー
 
@@ -50,7 +50,7 @@ description: >
 
 **解釈**: この引用をこのプロジェクトにどう適用したか、どう解釈したかを説明。
 
-#### 面接で聞かれそうな質問
+#### 理解度確認の質問
 
 1. **Q**: ...
    **A**: ...
